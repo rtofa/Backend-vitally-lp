@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: luminafit-db
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: luminafit_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - luminafit-network
+
+  backend:
+    build:
+      context: ./api # Aponta para a pasta do seu Spring Boot
+      dockerfile: Dockerfile
+    container_name: luminafit-backend
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/luminafit_db
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASS}
+    ports:
+      - "8080:8080"
+    networks:
+      - luminafit-network
+
+  # O frontend entrará aqui depois, apontando para a porta 80/443
+
+networks:
+  luminafit-network:
+    driver: bridge
+
+volumes:
+  postgres_data: # Garante que os dados do banco não sumam se o contêiner reiniciar
