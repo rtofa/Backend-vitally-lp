@@ -1,4 +1,4 @@
-package br.com.vitallyoficial.api.entity;
+package br.com.vitallyoficial.api.infraestructure.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,15 +11,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminEntity {
+@Table(name = "tb_lead_item")
+public class LeadItemEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String email;
+    @ManyToOne @JoinColumn(name = "lead_id")
+    private LeadEntity leadEntity;
 
-    private String password;
-
+    @ManyToOne @JoinColumn(name = "product_id")
+    private ProductEntity product;
 }

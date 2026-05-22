@@ -1,4 +1,4 @@
-package br.com.vitallyoficial.api.entity;
+package br.com.vitallyoficial.api.infraestructure.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,18 +11,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BannerEntity {
+@Table(name = "tb_admin")
+public class AdminEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    @Column(unique = true)
+    private String email;
 
-    @Column(nullable = false)
-    private String imageUrl;
+    private String password;
 
-    private Boolean isActive;
-
-    private Integer displayOrder;
 }
