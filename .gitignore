@@ -39,5 +39,5 @@ build/
 *.log
 
 # === Variáveis de Ambiente e Segredos ===
-application-prod.properties
-application-prod.yml
+application-dev.properties
+.env
