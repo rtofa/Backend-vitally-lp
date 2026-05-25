@@ -1,0 +1,63 @@
+package br.com.vitallyoficial.api.domain.service;
+
+import br.com.vitallyoficial.api.domain.model.Banner;
+import br.com.vitallyoficial.api.domain.repository.BannerRepository;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+
+import java.util.List;
+import java.util.UUID;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
+public class BannerService {
+
+    private final BannerRepository bannerRepository;
+
+    public BannerService(BannerRepository bannerRepository) {
+        this.bannerRepository = bannerRepository;
+    }
+
+    public Banner createBanner(String title, String imageUrl, Integer displayOrder) {
+        if (imageUrl == null || imageUrl.isBlank()) {
+            throw new IllegalArgumentException("A URL da imagem é obrigatória.");
+        }
+
+        Banner newBanner = new Banner(title, imageUrl, true, displayOrder);
+        return bannerRepository.save(newBanner);
+    }
+
+    public void deleteBannerById(UUID id){
+
+        bannerRepository.findById(id).orElseThrow(()
+                -> new IllegalArgumentException("Banner não encontrado!"));
+
+
+        bannerRepository.delete(id);
+    }
+
+    public Banner updateBanner(UUID id, String title, String imageUrl, Integer displayOrder){
+        Banner banner = bannerRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Banner não encontrado."));
+
+        banner.updateInfo(banner.getTitle(), banner.getImageUrl(), banner.getDisplayOrder());
+
+        return bannerRepository.save(banner);
+    }
+
+    public List<Banner> getActiveBanners() {
+        return bannerRepository.findAllActive();
+    }
+
+    public void changeStatus(UUID id, boolean isActive) {
+        Banner banner = bannerRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Banner não encontrado."));
+
+        if (isActive) {
+            banner.activate();
+        } else {
+            banner.deactivate();
+        }
+
+        bannerRepository.save(banner);
+    }
+}
