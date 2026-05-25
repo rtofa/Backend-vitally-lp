@@ -1,6 +1,4 @@
-package br.com.vitallyoficial.api.domain;
-
-import br.com.vitallyoficial.api.infraestructure.entity.LeadItemEntity;
+package br.com.vitallyoficial.api.domain.model;
 
 import java.time.LocalDateTime;
 import java.util.List;

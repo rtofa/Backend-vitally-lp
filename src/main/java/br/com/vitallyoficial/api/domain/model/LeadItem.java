@@ -1,4 +1,4 @@
-package br.com.vitallyoficial.api.domain;
+package br.com.vitallyoficial.api.domain.model;
 
 public class LeadItem {
 

@@ -1,6 +1,6 @@
-package br.com.vitallyoficial.api.infraestructure.entity;
+package br.com.vitallyoficial.api.infrastructure.entity;
 
-import br.com.vitallyoficial.api.domain.LeadType;
+import br.com.vitallyoficial.api.domain.model.LeadType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +29,7 @@ public class LeadEntity {
     @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String phone;
 
     @Column(columnDefinition = "TEXT")

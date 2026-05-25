@@ -1,4 +1,4 @@
-package br.com.vitallyoficial.api.infraestructure.entity;
+package br.com.vitallyoficial.api.infrastructure.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,9 +20,11 @@ public class LeadItemEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne @JoinColumn(name = "lead_id")
-    private LeadEntity leadEntity;
+    @ManyToOne
+    @JoinColumn(name = "lead_id", nullable = false)
+    private LeadEntity lead;
 
-    @ManyToOne @JoinColumn(name = "product_id")
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
     private ProductEntity product;
 }

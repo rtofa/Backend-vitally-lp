@@ -1,4 +1,4 @@
-package br.com.vitallyoficial.api.infraestructure.entity;
+package br.com.vitallyoficial.api.infrastructure.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
