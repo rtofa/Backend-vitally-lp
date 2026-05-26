@@ -1,11 +1,13 @@
 package br.com.vitallyoficial.api.domain.model;
 
+import java.util.UUID;
+
 public class LeadItem {
 
-    private Long productId;
+    private UUID productId;
     private Integer quantity;
 
-    public LeadItem(Long productId, Integer quantity){
+    public LeadItem(UUID productId, Integer quantity){
         if (productId == null){
             throw new IllegalArgumentException("O ID do produto é obrigatório");
         }
@@ -16,7 +18,7 @@ public class LeadItem {
         this.quantity = quantity;
     }
 
-    public Long getProductId() { return productId; }
+    public UUID getProductId() { return productId; }
 
     public Integer getQuantity() { return quantity; }
 }
