@@ -20,7 +20,6 @@ import java.util.UUID;
 public class LeadEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false)
@@ -34,6 +33,12 @@ public class LeadEntity {
 
     @Column(columnDefinition = "TEXT")
     private String message;
+
+    @Column(name = "city", length = 100)
+    private String city;
+
+    @Column(name = "state", length = 50)
+    private String state;
 
     @Enumerated(EnumType.STRING)
     private LeadType type;

@@ -20,11 +20,13 @@ public class LeadItemEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(nullable = false)
+    private Integer quantity;
+
     @ManyToOne
     @JoinColumn(name = "lead_id", nullable = false)
     private LeadEntity lead;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private ProductEntity product;
+    @Column(name = "product_id", nullable = false)
+    private UUID productId;
 }
