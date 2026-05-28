@@ -3,6 +3,7 @@ package br.com.vitallyoficial.api.presentation.exception;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -65,7 +66,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorDTO);
     }
 
-    @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class})
+    @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<StandardErrorDTO> handleResourceNotFound(ResourceNotFoundException ex, HttpServletRequest request) {
 
         StandardErrorDTO errorDTO = new StandardErrorDTO(
@@ -77,6 +78,20 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDTO);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<StandardErrorDTO> handleBadCredentials(BadCredentialsException ex, HttpServletRequest request) {
+
+        StandardErrorDTO errorDTO = new StandardErrorDTO(
+                LocalDateTime.now(),
+                HttpStatus.UNAUTHORIZED.value(), // Retorna 401 em vez de 500
+                "Não Autorizado",
+                request.getRequestURI(),
+                Collections.singletonList("E-mail ou senha incorretos.") // Mensagem amigável para o Frontend
+        );
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorDTO);
     }
 
 }
