@@ -36,6 +36,14 @@ public class BannerController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping
+    public ResponseEntity<List<BannerResponseDTO>> getAll() {
+        List<BannerResponseDTO> response = bannerService.getAllBanners().stream()
+                .map(BannerResponseDTO::fromDomain)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping
     public ResponseEntity<BannerResponseDTO> create(@RequestBody @Valid BannerRequestDTO request) {
         Banner banner = bannerService.createBanner(
@@ -58,6 +66,12 @@ public class BannerController {
                 request.displayOrder()
         );
         return ResponseEntity.ok(BannerResponseDTO.fromDomain(updateBanner));
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Void> changeStatus(@PathVariable UUID id, @RequestParam boolean isActive) {
+        bannerService.changeStatus(id, isActive);
+        return ResponseEntity.noContent().build();
     }
 
 

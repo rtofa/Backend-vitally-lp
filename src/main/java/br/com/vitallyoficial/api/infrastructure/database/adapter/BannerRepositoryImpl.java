@@ -28,6 +28,13 @@ public class BannerRepositoryImpl implements BannerRepository {
     }
 
     @Override
+    public List<Banner> findAll() {
+        return jpaRepository.findAll().stream()
+                .map(this::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Optional<Banner> findById(UUID id) {
         return jpaRepository.findById(id).map(this::toDomain);
     }
@@ -45,7 +52,7 @@ public class BannerRepositoryImpl implements BannerRepository {
         jpaRepository.deleteById(id);
     }
 
-    // Mappers MANUAIS (Convertem Domain <-> Entity)
+
     private BannerEntity toEntity(Banner banner) {
         BannerEntity entity = new BannerEntity();
         entity.setId(banner.getId());

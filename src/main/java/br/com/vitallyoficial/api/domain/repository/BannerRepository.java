@@ -10,4 +10,5 @@ public interface BannerRepository {
     Optional<Banner> findById(UUID id);
     List<Banner> findAllActive();
     void delete(UUID id);
+    List<Banner> findAll();
 }

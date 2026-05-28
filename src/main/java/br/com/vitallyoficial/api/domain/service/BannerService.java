@@ -35,6 +35,10 @@ public class BannerService {
         bannerRepository.delete(id);
     }
 
+    public List<Banner> getAllBanners() {
+        return bannerRepository.findAll();
+    }
+
     public Banner updateBanner(UUID id, String title, String imageUrl, Integer displayOrder){
         Banner banner = bannerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Banner não encontrado."));

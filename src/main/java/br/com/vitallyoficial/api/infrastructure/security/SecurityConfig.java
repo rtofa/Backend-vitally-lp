@@ -33,9 +33,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
 
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
-
+                        .requestMatchers(HttpMethod.GET, "/api/v1/banners/active").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/leads").permitAll()
-
+                        .requestMatchers("/api/v1/banners/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/products").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/products/*").permitAll()
 
