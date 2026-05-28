@@ -18,7 +18,6 @@ import java.util.UUID;
 public class ProductEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false)
@@ -30,6 +29,8 @@ public class ProductEntity {
     private BigDecimal price;
 
     private String imageUrl;
+
+    private Integer displayOrder;
 
     private Boolean isActive;
 }
