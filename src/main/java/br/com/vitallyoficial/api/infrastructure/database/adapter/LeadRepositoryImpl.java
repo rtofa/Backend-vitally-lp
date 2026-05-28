@@ -7,9 +7,9 @@ import br.com.vitallyoficial.api.domain.repository.LeadRepository;
 import br.com.vitallyoficial.api.infrastructure.entity.LeadEntity;
 import br.com.vitallyoficial.api.infrastructure.entity.LeadItemEntity;
 import br.com.vitallyoficial.api.infrastructure.database.repository.LeadJpaRepository;
-import br.com.vitallyoficial.api.infrastructure.entity.ProductEntity;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,6 +34,11 @@ public class LeadRepositoryImpl implements LeadRepository {
 
 
         return toDomain(savedEntity);
+    }
+
+    @Override
+    public Page<Lead> findAll(Pageable pageable) {
+        return leadJpaRepository.findAll(pageable).map(this::toDomain);
     }
 
     @Override

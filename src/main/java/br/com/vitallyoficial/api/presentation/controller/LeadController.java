@@ -2,14 +2,18 @@ package br.com.vitallyoficial.api.presentation.controller;
 
 import br.com.vitallyoficial.api.domain.model.Lead;
 import br.com.vitallyoficial.api.domain.model.LeadItem;
+import br.com.vitallyoficial.api.domain.model.PageResult;
 import br.com.vitallyoficial.api.domain.service.LeadService;
 import br.com.vitallyoficial.api.presentation.dto.LeadRequestDTO;
 import br.com.vitallyoficial.api.presentation.dto.LeadResponseDTO;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,13 +29,11 @@ public class LeadController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LeadResponseDTO>> getAll() {
-
-        List<LeadResponseDTO> response = leadService.getAllLeads()
-                .stream()
-                .map(LeadResponseDTO::fromDomain)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(response);
+    public ResponseEntity<PageResult<LeadResponseDTO>> findAll(
+            @PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        PageResult<LeadResponseDTO> result = leadService.findAll(pageable);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping

@@ -1,7 +1,8 @@
 package br.com.vitallyoficial.api.domain.repository;
 
 import br.com.vitallyoficial.api.domain.model.Lead;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -11,5 +12,5 @@ public interface LeadRepository {
     Optional<Lead> findById(UUID id);
     List<Lead> findAll();
     void delete(UUID id);
-
+    Page<Lead> findAll(Pageable pageable);
 }
