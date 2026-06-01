@@ -15,10 +15,10 @@ public class S3StorageService {
 
     private final S3Client s3Client;
 
-    @Value("${aws.s3.bucket}")
+    @Value("${AWS_BUCKET_NAME}")
     private String bucketName;
 
-    @Value("${aws.region}")
+    @Value("${AWS_REGION}")
     private String region;
 
     public S3StorageService(S3Client s3Client) {
@@ -27,24 +27,24 @@ public class S3StorageService {
 
     public String uploadImage(MultipartFile file) {
         try {
-            // Gera um nome único para evitar sobreposição de arquivos
-            String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename().replace(" ", "_");
+            // Gera um nome único e remove espaços para evitar bugs em URLs
+            String originalName = file.getOriginalFilename() != null ? file.getOriginalFilename() : "imagem";
+            String fileName = UUID.randomUUID() + "-" + originalName.replace(" ", "_");
 
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(bucketName)
                     .key(fileName)
                     .contentType(file.getContentType())
-                    // ACL pública para que a imagem possa ser vista no site (depende da config do seu bucket)
-                    // .acl(ObjectCannedACL.PUBLIC_READ)
                     .build();
 
+            // Executa o upload para a AWS
             s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
 
-            // Constrói e devolve o URL público do ficheiro gerado pela AWS
-            return "https://" + bucketName + ".s3." + region + ".amazonaws.com/" + fileName;
+            // Constrói e devolve a URL pública oficial do S3
+            return String.format("https://%s.s3.%s.amazonaws.com/%s", bucketName, region, fileName);
 
         } catch (IOException e) {
-            throw new RuntimeException("Falha ao processar o arquivo de imagem.", e);
+            throw new RuntimeException("Falha ao processar o arquivo de imagem para o S3.", e);
         }
     }
 }

@@ -2,7 +2,10 @@ package br.com.vitallyoficial.api.presentation.controller;
 
 import br.com.vitallyoficial.api.infrastructure.storage.S3StorageService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
@@ -19,9 +22,9 @@ public class UploadController {
 
     @PostMapping("/image")
     public ResponseEntity<Map<String, String>> uploadImage(@RequestParam("file") MultipartFile file) {
+
         String fileUrl = storageService.uploadImage(file);
 
-        // Devolvemos um JSON simples com o link da imagem { "url": "https://..." }
         return ResponseEntity.ok(Map.of("url", fileUrl));
     }
 }
