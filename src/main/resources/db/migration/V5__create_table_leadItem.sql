@@ -3,8 +3,8 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 CREATE TABLE tb_lead_item (
 
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    lead_id BIGINT NOT NULL,
-    product_id BIGINT NOT NULL,
+    lead_id UUID NOT NULL,
+    product_id UUID NOT NULL,
     quantity INTEGER NOT NULL,
 
 
