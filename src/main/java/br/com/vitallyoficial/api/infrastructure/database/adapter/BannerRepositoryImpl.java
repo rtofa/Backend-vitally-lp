@@ -57,7 +57,8 @@ public class BannerRepositoryImpl implements BannerRepository {
         BannerEntity entity = new BannerEntity();
         entity.setId(banner.getId());
         entity.setTitle(banner.getTitle());
-        entity.setImageUrl(banner.getImageUrl());
+        entity.setDesktopImageUrl(banner.getDesktopImageUrl());
+        entity.setMobileImageUrl(banner.getMobileImageUrl());
         entity.setIsActive(banner.getIsActive());
         entity.setDisplayOrder(banner.getDisplayOrder());
         return entity;
@@ -67,7 +68,8 @@ public class BannerRepositoryImpl implements BannerRepository {
         return new Banner(
                 entity.getId(),
                 entity.getTitle(),
-                entity.getImageUrl(),
+                entity.getDesktopImageUrl(),
+                entity.getMobileImageUrl(),
                 entity.getIsActive(),
                 entity.getDisplayOrder()
         );
