@@ -55,6 +55,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<StandardErrorDTO> handleGenericErrors(Exception ex, HttpServletRequest request) {
 
+        ex.printStackTrace();
+
         StandardErrorDTO errorDTO = new StandardErrorDTO(
                 LocalDateTime.now(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
