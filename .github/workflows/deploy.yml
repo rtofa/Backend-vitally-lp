@@ -12,6 +12,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Configurar JDK 21 e Cache do Maven
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build com Maven
+        run: mvn clean package -DskipTests
+
       - name: Conectar na EC2 e reiniciar Docker
         uses: appleboy/ssh-action@v1.0.3
         with:
