@@ -27,7 +27,6 @@ public class S3StorageService {
 
     public String uploadImage(MultipartFile file) {
         try {
-            // Gera um nome único e remove espaços para evitar bugs em URLs
             String originalName = file.getOriginalFilename() != null ? file.getOriginalFilename() : "imagem";
             String fileName = UUID.randomUUID() + "-" + originalName.replace(" ", "_");
 
@@ -37,14 +36,15 @@ public class S3StorageService {
                     .contentType(file.getContentType())
                     .build();
 
-            // Executa o upload para a AWS
+
             s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
 
-            // Constrói e devolve a URL pública oficial do S3
             return String.format("https://%s.s3.%s.amazonaws.com/%s", bucketName, region, fileName);
 
         } catch (IOException e) {
-            throw new RuntimeException("Falha ao processar o arquivo de imagem para o S3.", e);
+            System.err.println("🚨 ERRO FATAL NO UPLOAD DO S3 🚨");
+            e.printStackTrace();
+            throw new RuntimeException("Falha ao processar o arquivo para o S3: " + e.getMessage(), e);
         }
     }
 }
