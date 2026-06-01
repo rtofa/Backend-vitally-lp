@@ -20,7 +20,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
-            cd /home/ubuntu/vitally-app/backend
+            cd /root/vitally-app/backend
             git pull origin main
-            cd /home/ubuntu/vitally-app
+            cd /root/vitally-app
             docker compose up -d --build backend
