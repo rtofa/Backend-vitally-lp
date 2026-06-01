@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/uploads")
+@RequestMapping({"/api/v1/uploads", "/uploads"})
 public class UploadController {
 
     private final S3StorageService storageService;
