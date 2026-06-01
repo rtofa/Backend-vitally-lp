@@ -6,7 +6,8 @@ import java.util.UUID;
 public record BannerResponseDTO(
         UUID id,
         String title,
-        String imageUrl,
+        String desktopImageUrl,
+        String mobileImageUrl,
         Boolean isActive,
         Integer displayOrder
 ) {
@@ -15,7 +16,8 @@ public record BannerResponseDTO(
         return new BannerResponseDTO(
                 banner.getId(),
                 banner.getTitle(),
-                banner.getImageUrl(),
+                banner.getDesktopImageUrl(),
+                banner.getMobileImageUrl(),
                 banner.getIsActive(),
                 banner.getDisplayOrder()
         );
