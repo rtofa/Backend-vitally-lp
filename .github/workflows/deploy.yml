@@ -9,12 +9,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Conectar na EC2, atualizar código e reiniciar Docker
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Conectar na EC2 e reiniciar Docker
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
           script: |
             cd /home/ubuntu/vitally-app/backend
             git pull origin main
