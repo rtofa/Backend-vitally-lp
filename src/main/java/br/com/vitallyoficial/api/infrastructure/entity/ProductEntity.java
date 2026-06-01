@@ -33,4 +33,8 @@ public class ProductEntity {
     private Integer displayOrder;
 
     private Boolean isActive;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
+    private CategoryEntity categoryEntity;
 }

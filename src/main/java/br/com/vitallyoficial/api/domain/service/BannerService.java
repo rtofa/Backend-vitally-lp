@@ -39,11 +39,18 @@ public class BannerService {
         return bannerRepository.findAll();
     }
 
+    public Banner findById(UUID id) {
+
+        return bannerRepository.findById(id).orElseThrow(()
+                -> new IllegalArgumentException("Banner não encontrado!"));
+
+    }
+
     public Banner updateBanner(UUID id, String title, String imageUrl, Integer displayOrder){
         Banner banner = bannerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Banner não encontrado."));
 
-        banner.updateInfo(banner.getTitle(), banner.getImageUrl(), banner.getDisplayOrder());
+        banner.updateInfo(title, imageUrl, displayOrder);
 
         return bannerRepository.save(banner);
     }

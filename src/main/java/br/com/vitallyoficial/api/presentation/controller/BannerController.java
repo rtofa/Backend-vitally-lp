@@ -44,6 +44,16 @@ public class BannerController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<BannerResponseDTO> findById(@PathVariable UUID id) {
+
+        Banner banner = bannerService.findById(id);
+
+        BannerResponseDTO response = BannerResponseDTO.fromDomain(banner);
+
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping
     public ResponseEntity<BannerResponseDTO> create(@RequestBody @Valid BannerRequestDTO request) {
         Banner banner = bannerService.createBanner(
