@@ -25,6 +25,10 @@ public class BannerEntity {
     @Column(nullable = false)
     private String imageUrl;
 
+    private String desktopImageUrl;
+
+    private String mobileImageUrl;
+
     private Boolean isActive;
 
     private Integer displayOrder;

@@ -6,32 +6,38 @@ public class Banner {
 
     private UUID id;
     private String title;
-    private String imageUrl;
+    private String desktopImageUrl;
+    private String mobileImageUrl;
     private Boolean isActive;
     private Integer displayOrder;
 
 
-    public Banner(String title, String imageUrl, Boolean isActive, Integer displayOrder) {
+    public Banner(String title, String desktopImageUrl, String mobileImageUrl, Boolean isActive, Integer displayOrder) {
         this.title = title;
-        this.imageUrl = imageUrl;
-        this.isActive = isActive != null ? isActive : true; // Por padrão, nasce ativo
+        this.desktopImageUrl = desktopImageUrl;
+        this.mobileImageUrl = mobileImageUrl;
+        this.isActive = isActive != null ? isActive : true;
         this.displayOrder = displayOrder;
     }
 
-    public Banner(UUID id, String title, String imageUrl, Boolean isActive, Integer displayOrder) {
+    public Banner(UUID id, String title, String desktopImageUrl, String mobileImageUrl, Boolean isActive, Integer displayOrder) {
         this.id = id;
         this.title = title;
-        this.imageUrl = imageUrl;
+        this.desktopImageUrl = desktopImageUrl;
+        this.mobileImageUrl = mobileImageUrl;
         this.isActive = isActive;
         this.displayOrder = displayOrder;
     }
 
-    public void updateInfo(String title, String imageUrl, Integer displayOrder) {
+    public void updateInfo(String title, String desktopImageUrl, String mobileImageUrl, Integer displayOrder) {
         if (title != null && !title.isBlank()) {
             this.title = title;
         }
-        if (imageUrl != null && !imageUrl.isBlank()) {
-            this.imageUrl = imageUrl;
+        if (desktopImageUrl != null && !desktopImageUrl.isBlank()) {
+            this.desktopImageUrl = desktopImageUrl;
+        }
+        if (mobileImageUrl != null && !mobileImageUrl.isBlank()) {
+            this.mobileImageUrl = mobileImageUrl;
         }
         if (displayOrder != null) {
             this.displayOrder = displayOrder;
@@ -50,9 +56,9 @@ public class Banner {
 
     public UUID getId() { return id; }
     public String getTitle() { return title; }
-    public String getImageUrl() { return imageUrl; }
     public Boolean getIsActive() { return isActive; }
     public Integer getDisplayOrder() { return displayOrder; }
-
-
+    public String getDesktopImageUrl() { return desktopImageUrl; }
+    public String getMobileImageUrl() { return mobileImageUrl; }
+    public Boolean getActive() { return isActive; }
 }

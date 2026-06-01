@@ -58,7 +58,8 @@ public class BannerController {
     public ResponseEntity<BannerResponseDTO> create(@RequestBody @Valid BannerRequestDTO request) {
         Banner banner = bannerService.createBanner(
                 request.title(),
-                request.imageUrl(),
+                request.desktopImageUrl(),
+                request.mobileImageUrl(),
                 request.displayOrder());
 
         BannerResponseDTO response = BannerResponseDTO.fromDomain(banner);
@@ -72,7 +73,8 @@ public class BannerController {
         Banner updateBanner = bannerService.updateBanner(
                 id,
                 request.title(),
-                request.imageUrl(),
+                request.desktopImageUrl(),
+                request.mobileImageUrl(),
                 request.displayOrder()
         );
         return ResponseEntity.ok(BannerResponseDTO.fromDomain(updateBanner));

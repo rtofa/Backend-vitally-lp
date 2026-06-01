@@ -17,12 +17,15 @@ public class BannerService {
         this.bannerRepository = bannerRepository;
     }
 
-    public Banner createBanner(String title, String imageUrl, Integer displayOrder) {
-        if (imageUrl == null || imageUrl.isBlank()) {
-            throw new IllegalArgumentException("A URL da imagem é obrigatória.");
+    public Banner createBanner(String title, String desktopImageUrl, String mobileImageUrl, Integer displayOrder) {
+        if (desktopImageUrl == null || desktopImageUrl.isBlank()) {
+            throw new IllegalArgumentException("A URL da imagem desktop é obrigatória.");
+        }
+        if (mobileImageUrl == null || mobileImageUrl.isBlank()) {
+            throw new IllegalArgumentException("A URL da imagem mobile é obrigatória.");
         }
 
-        Banner newBanner = new Banner(title, imageUrl, true, displayOrder);
+        Banner newBanner = new Banner(title, desktopImageUrl, mobileImageUrl,  true, displayOrder);
         return bannerRepository.save(newBanner);
     }
 
@@ -46,11 +49,11 @@ public class BannerService {
 
     }
 
-    public Banner updateBanner(UUID id, String title, String imageUrl, Integer displayOrder){
+    public Banner updateBanner(UUID id, String title, String desktopImageUrl, String mobileImageUrl, Integer displayOrder){
         Banner banner = bannerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Banner não encontrado."));
 
-        banner.updateInfo(title, imageUrl, displayOrder);
+        banner.updateInfo(title, desktopImageUrl, mobileImageUrl, displayOrder);
 
         return bannerRepository.save(banner);
     }

@@ -8,8 +8,11 @@ public record BannerRequestDTO(
         @NotBlank(message = "O título é obrigatório")
         String title,
 
-        @NotBlank(message = "A URL da imagem é obrigatória")
-        String imageUrl,
+        @NotBlank(message = "A URL da imagem desktop é obrigatória")
+        String desktopImageUrl,
+
+        @NotBlank(message = "A URL da imagem mobile é obrigatória")
+        String mobileImageUrl,
 
         @NotNull(message = "A ordem de exibição é obrigatória")
         @Positive(message = "A ordem de exibição deve ser maior que zero")
