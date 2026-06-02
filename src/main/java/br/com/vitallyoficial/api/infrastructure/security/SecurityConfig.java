@@ -40,19 +40,32 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/banners/active").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/leads").permitAll()
-                        .requestMatchers("/api/v1/banners/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/products").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/products/*").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/products").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/products/*").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PATCH, "/api/v1/products/*").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/products/*").hasRole("ADMIN")
+
+                        // 1. LEITURA PÚBLICA (Vitrine inteira liberada)
+                        .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/banners/**").permitAll()
+
+                        // 2. ESCRITA RESTRITA - Produtos (Painel Admin)
+                        .requestMatchers(HttpMethod.POST, "/api/v1/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/products/**").hasRole("ADMIN")
+
+                        // 3. ESCRITA RESTRITA - Categorias (Painel Admin)
+                        .requestMatchers(HttpMethod.POST, "/api/v1/categories/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/categories/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/categories/**").hasRole("ADMIN")
+
+                        // 4. ESCRITA RESTRITA - Banners (Painel Admin)
+                        .requestMatchers(HttpMethod.POST, "/api/v1/banners/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/banners/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/banners/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/banners/**").hasRole("ADMIN")
 
                         .requestMatchers("/h2-console/**").permitAll()
-
                         .anyRequest().authenticated()
                 )
 
