@@ -38,7 +38,6 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
 
-
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/banners/active").permitAll()
@@ -52,9 +51,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/products/*").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/products/*").hasRole("ADMIN")
 
+                        .requestMatchers("/h2-console/**").permitAll()
 
                         .anyRequest().authenticated()
                 )
+
+
+                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
 
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
@@ -81,9 +84,7 @@ public class SecurityConfig {
                 "https://admin.vitallyoficial.com.br"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
-
         configuration.setAllowedHeaders(Arrays.asList("*"));
-
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
