@@ -15,7 +15,7 @@ public class Product {
 
     public Product(UUID id, String productName, String productDescription, String imageUrl, BigDecimal price, Integer displayOrder, Boolean isActive) {
         if (productName == null || productName.isBlank()) throw new IllegalArgumentException("O nome do produto é obrigatório.");
-        if (price == null || price.compareTo(BigDecimal.ZERO) <= 0) throw new IllegalArgumentException("O preço deve ser maior que zero.");
+        if (price != null && price.compareTo(BigDecimal.ZERO) <= 0) { throw new IllegalArgumentException("O preço deve ser maior que zero."); }
 
         this.id = id;
         this.productName = productName;
