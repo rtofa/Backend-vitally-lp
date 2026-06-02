@@ -24,9 +24,9 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./backend/Dockerfile
+          file: ./Dockerfile
           push: true
-          tags: ghcr.io/SEU_USUARIO/vitally-backend:main
+          tags: ghcr.io/rtofa/vitally-backend:main
 
   deploy-vps:
     needs: build-and-push
@@ -40,6 +40,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /root/vitally-app
-            echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u SEU_USUARIO --password-stdin
+            echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u rtofa --password-stdin
             docker compose pull backend
             docker compose up -d backend
