@@ -1,36 +1,45 @@
-name: Deploy Backend to EC2
+name: Deploy Backend
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  deploy:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login no GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build e Push Backend
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./backend/Dockerfile
+          push: true
+          tags: ghcr.io/SEU_USUARIO/vitally-backend:main
+
+  deploy-vps:
+    needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Configurar JDK 21 e Cache do Maven
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-          cache: 'maven'
-
-      - name: Build com Maven
-        run: mvn clean package -DskipTests
-
-      - name: Conectar na EC2 e reiniciar Docker
+      - name: Atualizar Backend na VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          port: 22
           script: |
-            cd /root/vitally-app/backend
-            git pull origin main
             cd /root/vitally-app
-            docker compose up -d --build backend
+            echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u SEU_USUARIO --password-stdin
+            docker compose pull backend
+            docker compose up -d backend
