@@ -22,9 +22,6 @@ public class BannerEntity {
 
     private String title;
 
-    @Column(nullable = false)
-    private String imageUrl;
-
     private String desktopImageUrl;
 
     private String mobileImageUrl;
