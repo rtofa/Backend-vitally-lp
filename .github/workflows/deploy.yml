@@ -36,7 +36,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y knockd
-          knock ${{ secrets.EC2_HOST }} 7000 8000 9000
+          knock -d 1000 ${{ secrets.EC2_HOST }} 7000 8000 9000
           sleep 3
 
       - name: Atualizar Backend na VPS
@@ -53,4 +53,4 @@ jobs:
 
       - name: Fechar Porta SSH
         if: always()
-        run: knock ${{ secrets.EC2_HOST }} 9000 8000 7000
+        run: knock -d 1000 ${{ secrets.EC2_HOST }} 9000 8000 7000
