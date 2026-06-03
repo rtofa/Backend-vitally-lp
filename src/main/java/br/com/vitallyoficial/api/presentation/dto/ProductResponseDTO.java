@@ -11,7 +11,8 @@ public record ProductResponseDTO(
         String imageUrl,
         BigDecimal price,
         Integer displayOrder,
-        Boolean isActive
+        Boolean isActive,
+        String categoryName
 ) {
 
     public static ProductResponseDTO fromDomain(Product product) {
@@ -22,7 +23,8 @@ public record ProductResponseDTO(
                 product.getImageUrl(),
                 product.getPrice(),
                 product.getDisplayOrder(),
-                product.getActive()
+                product.getActive(),
+                product.getCategory() != null ? product.getCategory().getName() : null
         );
     }
 }

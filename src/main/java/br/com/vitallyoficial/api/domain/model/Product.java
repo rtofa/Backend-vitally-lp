@@ -13,7 +13,9 @@ public class Product {
     private Integer displayOrder;
     private Boolean isActive;
 
-    public Product(UUID id, String productName, String productDescription, String imageUrl, BigDecimal price, Integer displayOrder, Boolean isActive) {
+    private Category category;
+
+    public Product(UUID id, String productName, String productDescription, String imageUrl, BigDecimal price, Integer displayOrder, Boolean isActive, Category category) {
         if (productName == null || productName.isBlank()) throw new IllegalArgumentException("O nome do produto é obrigatório.");
         if (price != null && price.compareTo(BigDecimal.ZERO) <= 0) { throw new IllegalArgumentException("O preço deve ser maior que zero."); }
 
@@ -24,9 +26,10 @@ public class Product {
         this.price = price;
         this.displayOrder = displayOrder;
         this.isActive = isActive != null ? isActive : true;
+        this.category = category;
     }
 
-    public static Product create(String productName, String productDescription, String imageUrl, BigDecimal price, Integer displayOrder) {
+    public static Product create(String productName, String productDescription, String imageUrl, BigDecimal price, Integer displayOrder, Category category) {
         return new Product(
                 UUID.randomUUID(),
                 productName,
@@ -34,11 +37,12 @@ public class Product {
                 imageUrl,
                 price,
                 displayOrder,
-                true
+                true,
+                category
         );
     }
 
-    public static Product restore(UUID id, String productName, String productDescription, String imageUrl, BigDecimal price, Integer displayOrder, Boolean isActive) {
+    public static Product restore(UUID id, String productName, String productDescription, String imageUrl, BigDecimal price, Integer displayOrder, Boolean isActive, Category category) {
         return new Product(
                 id,
                 productName,
@@ -46,12 +50,13 @@ public class Product {
                 imageUrl,
                 price,
                 displayOrder,
-                isActive
+                isActive,
+                category
         );
     }
 
 
-    public void updateInfo(String productName, String productDescription, String imageUrl, Integer displayOrder){
+    public void updateInfo(String productName, String productDescription, String imageUrl, Integer displayOrder, Category category){
 
         if (productName != null && !productName.isBlank()) {
             this.productName = productName;
@@ -65,6 +70,9 @@ public class Product {
         if (productDescription != null && !productDescription.isBlank()) {
             this.productDescription = productDescription;
         }
+        if (category != null) {
+            this.category = category;
+        }
     }
 
     public void activate(){ this.isActive = true; }
@@ -72,6 +80,7 @@ public class Product {
     public void deactive(){ this.isActive = false; }
 
 
+    public Category getCategory() { return this.category; }
 
     public UUID getId() { return id; }
 

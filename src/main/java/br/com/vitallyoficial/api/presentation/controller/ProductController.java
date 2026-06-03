@@ -62,7 +62,8 @@ public class ProductController {
                 request.description(),
                 request.price(),
                 request.imageUrl(),
-                request.displayOrder()
+                request.displayOrder(),
+                request.categoryId()
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(ProductResponseDTO.fromDomain(createdProduct));
     }
@@ -74,7 +75,8 @@ public class ProductController {
                 request.name(),
                 request.description(),
                 request.imageUrl(),
-                request.displayOrder()
+                request.displayOrder(),
+                request.categoryId()
         );
         return ResponseEntity.ok(ProductResponseDTO.fromDomain(updatedProduct));
     }

@@ -1,8 +1,11 @@
 package br.com.vitallyoficial.api.domain.service;
 
+import br.com.vitallyoficial.api.domain.model.Category;
 import br.com.vitallyoficial.api.domain.model.PageResult;
 import br.com.vitallyoficial.api.domain.model.Product;
+import br.com.vitallyoficial.api.domain.repository.CategoryRepository;
 import br.com.vitallyoficial.api.domain.repository.ProductRepository;
+import br.com.vitallyoficial.api.presentation.exception.GlobalExceptionHandler;
 import br.com.vitallyoficial.api.presentation.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -13,23 +16,37 @@ import java.util.UUID;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
-    public Product createProduct(String name, String description, BigDecimal price, String imageUrl, Integer displayOrder) {
+    public Product createProduct(String name, String description, BigDecimal price, String imageUrl, Integer displayOrder, UUID categoryId) {
 
-        Product newProduct = Product.create(name, description, imageUrl, price, displayOrder);
+        Category category = null;
+        if (categoryId != null) {
+            category = categoryRepository.findById(categoryId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada"));
+        }
+
+        Product newProduct = Product.create(name, description, imageUrl, price, displayOrder, category);
 
         return productRepository.save(newProduct);
     }
 
-    public Product updateProduct(UUID id, String name, String description, String imageUrl, Integer displayOrder) {
+    public Product updateProduct(UUID id, String name, String description, String imageUrl, Integer displayOrder, UUID categoryId) {
 
         Product product = getProductById(id);
 
-        product.updateInfo(name, description, imageUrl, displayOrder);
+        Category category = null;
+        if (categoryId != null) {
+            category = categoryRepository.findById(categoryId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada"));
+        }
+
+        product.updateInfo(name, description, imageUrl, displayOrder, category);
 
         return productRepository.save(product);
     }

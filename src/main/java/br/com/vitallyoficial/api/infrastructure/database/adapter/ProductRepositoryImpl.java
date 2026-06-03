@@ -1,8 +1,10 @@
 package br.com.vitallyoficial.api.infrastructure.database.adapter;
 
+import br.com.vitallyoficial.api.domain.model.Category;
 import br.com.vitallyoficial.api.domain.model.PageResult;
 import br.com.vitallyoficial.api.domain.model.Product;
 import br.com.vitallyoficial.api.domain.repository.ProductRepository;
+import br.com.vitallyoficial.api.infrastructure.entity.CategoryEntity;
 import br.com.vitallyoficial.api.infrastructure.entity.ProductEntity;
 import br.com.vitallyoficial.api.infrastructure.database.repository.ProductJpaRepository;
 import org.springframework.data.domain.Page;
@@ -16,7 +18,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Repository
-public class ProductRepositoryImpl implements ProductRepository {
+public class  ProductRepositoryImpl implements ProductRepository {
 
     private final ProductJpaRepository productJpaRepository;
 
@@ -70,6 +72,12 @@ public class ProductRepositoryImpl implements ProductRepository {
             entity.setId(product.getId());
         }
 
+        if (product.getCategory() != null) {
+            CategoryEntity catEntity = new CategoryEntity();
+            catEntity.setId(product.getCategory().getId());
+            entity.setCategoryEntity(catEntity);
+        }
+
         entity.setName(product.getProductName());
         entity.setDescription(product.getProductDescription());
         entity.setImageUrl(product.getImageUrl());
@@ -81,6 +89,15 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     private Product toDomain(ProductEntity entity) {
+
+        Category categoryDomain = entity.getCategoryEntity() != null ?
+                Category.restore(
+                        entity.getCategoryEntity().getId(),
+                        entity.getCategoryEntity().getName(),
+                        entity.getCategoryEntity().getImageUrl(),
+                        entity.getCategoryEntity().getIsActive()
+                ) : null;
+
         return Product.restore(
                 entity.getId(),
                 entity.getName(),
@@ -88,7 +105,8 @@ public class ProductRepositoryImpl implements ProductRepository {
                 entity.getImageUrl(),
                 entity.getPrice(),
                 entity.getDisplayOrder(),
-                entity.getIsActive()
+                entity.getIsActive(),
+                categoryDomain
         );
     }
 }
