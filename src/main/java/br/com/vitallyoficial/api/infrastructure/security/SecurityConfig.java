@@ -93,8 +93,8 @@ public class SecurityConfig {
         configuration.setAllowedOriginPatterns(Arrays.asList(
                 "http://localhost:5173",
                 "http://localhost:3000",
-                "https://*.vitallyoficial.com.br",
-                "https://admin.vitallyoficial.com.br"
+                "https://www.vitallyoficial.com.br",
+                "https://vitallyoficial.com.br"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
