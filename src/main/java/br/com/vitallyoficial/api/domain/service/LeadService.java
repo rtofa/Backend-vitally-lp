@@ -7,6 +7,7 @@ import br.com.vitallyoficial.api.domain.model.PageResult;
 import br.com.vitallyoficial.api.domain.repository.LeadRepository;
 import br.com.vitallyoficial.api.presentation.dto.LeadItemResponseDTO;
 import br.com.vitallyoficial.api.presentation.dto.LeadResponseDTO;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +21,11 @@ import static java.util.stream.Collectors.toList;
 public class LeadService {
 
     private final LeadRepository leadRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
-    public LeadService(LeadRepository leadRepository) {
+    public LeadService(LeadRepository leadRepository, ApplicationEventPublisher eventPublisher) {
         this.leadRepository = leadRepository;
+        this.eventPublisher = eventPublisher;
     }
 
     public Lead createLead(String name, String phone, String email, String message, String city, String state, LeadType type, List<LeadItem> items) {

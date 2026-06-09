@@ -1,6 +1,7 @@
 package br.com.vitallyoficial.api.infrastructure.entity;
 
 import br.com.vitallyoficial.api.domain.model.LeadType;
+import br.com.vitallyoficial.api.domain.model.RdSyncStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,6 +43,10 @@ public class LeadEntity {
 
     @Enumerated(EnumType.STRING)
     private LeadType type;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "rd_sync_status", nullable = false)
+    private RdSyncStatus rdSyncStatus = RdSyncStatus.PENDING;
 
     private LocalDateTime createdAt;
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Lead {
+public class  Lead {
 
     private UUID id;
     private String name;
@@ -17,6 +17,7 @@ public class Lead {
     private LeadType type;
     private LocalDateTime createdAt;
     private List<LeadItem> items;
+    private RdSyncStatus rdSyncStatus;
 
 
     private Lead(String name, String phone, String email, String message, String city, String state, LeadType type, List<LeadItem> items) {
@@ -33,6 +34,7 @@ public class Lead {
         this.type = type;
         this.createdAt = LocalDateTime.now();
         this.items = (items != null) ? new ArrayList<>(items) : new ArrayList<>();
+        this.rdSyncStatus = RdSyncStatus.PENDING;
 
         validate();
     }
@@ -57,6 +59,14 @@ public class Lead {
 
     public static Lead createQuote(String name, String phone, String email, String message, String city, String state, List<LeadItem> items) {
         return new Lead(name, phone, email, message, city, state, LeadType.QUOTE, items);
+    }
+
+    public RdSyncStatus getRdSyncStatus() {
+        return rdSyncStatus;
+    }
+
+    public void setRdSyncStatus(RdSyncStatus rdSyncStatus) {
+        this.rdSyncStatus = rdSyncStatus;
     }
 
     public String getState() { return state; }
@@ -94,4 +104,7 @@ public class Lead {
     public List<LeadItem> getItems() {
         return items;
     }
+
+    public void setId(UUID id) { this.id = id; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }
