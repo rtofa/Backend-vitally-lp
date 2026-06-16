@@ -42,5 +42,6 @@ services:
       - vitally-network
 
 networks:
-  vitally-network:
-    driver: bridge
+    default:
+      external: 
+        name: web-proxy
