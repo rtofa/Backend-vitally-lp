@@ -28,11 +28,13 @@ public class LeadService {
         this.eventPublisher = eventPublisher;
     }
 
-    public Lead createLead(String name, String phone, String email, String message, String city, String state, LeadType type, List<LeadItem> items) {
+    public Lead createLead(String name, String phone, String email, String message, String city, String state, LeadType type, List<LeadItem> items, String segment) {
         Lead lead;
 
         if (type == LeadType.CONTACT) {
             lead = Lead.createContact(name, phone, email, message, city, state);
+        } else if (type == LeadType.WHATSAPP) {
+            lead = Lead.createWhatsapp(name, phone, email, city, state, segment);
         } else {
             lead = Lead.createQuote(name, phone, email, message, city, state, items);
         }
@@ -59,7 +61,8 @@ public class LeadService {
                                         item.getProductId(),
                                         item.getQuantity()
                                 ))
-                                .toList()
+                                .toList(),
+                        lead.getSegment()
 
                 ))
                     .toList();

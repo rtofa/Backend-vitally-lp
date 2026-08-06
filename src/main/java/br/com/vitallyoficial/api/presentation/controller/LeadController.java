@@ -58,7 +58,8 @@ public class LeadController {
                 request.city(),
                 request.state(),
                 request.type(),
-                domainItems
+                domainItems,
+                request.segment()
         );
 
 

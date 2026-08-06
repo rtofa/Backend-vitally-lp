@@ -30,5 +30,7 @@ public record LeadRequestDTO(
         LeadType type,
 
         @Valid
-        List<LeadItemRequestDTO> items
+        List<LeadItemRequestDTO> items,
+
+        String segment
 ) {}

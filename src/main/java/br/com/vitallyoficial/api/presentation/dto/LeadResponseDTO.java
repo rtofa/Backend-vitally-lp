@@ -17,7 +17,8 @@ import java.util.UUID;
                               String state,
                               LeadType type,
                               LocalDateTime createdAt,
-                              List<LeadItemResponseDTO> items
+                              List<LeadItemResponseDTO> items,
+                              String segment
     ) {
 
     public static LeadResponseDTO fromDomain(Lead lead){
@@ -39,7 +40,8 @@ import java.util.UUID;
             lead.getState(),
             lead.getType(),
             lead.getCreatedAt(),
-            itemDTOs
+            itemDTOs,
+            lead.getSegment()
         );
     }
 }

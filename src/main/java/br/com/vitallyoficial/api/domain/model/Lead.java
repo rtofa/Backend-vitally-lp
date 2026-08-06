@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class  Lead {
+public class Lead {
 
     private UUID id;
     private String name;
@@ -18,6 +18,7 @@ public class  Lead {
     private LocalDateTime createdAt;
     private List<LeadItem> items;
     private RdSyncStatus rdSyncStatus;
+    private String segment;
 
 
     private Lead(String name, String phone, String email, String message, String city, String state, LeadType type, List<LeadItem> items) {
@@ -35,6 +36,26 @@ public class  Lead {
         this.createdAt = LocalDateTime.now();
         this.items = (items != null) ? new ArrayList<>(items) : new ArrayList<>();
         this.rdSyncStatus = RdSyncStatus.PENDING;
+
+        validate();
+    }
+
+    private Lead(String name, String phone, String email, String message, String city, String state, LeadType type, List<LeadItem> items, String segment) {
+        if (name == null || name.isBlank()) throw new IllegalArgumentException("Nome é obrigatório");
+        if (email == null || email.isBlank()) throw new IllegalArgumentException("E-mail é obrigatório");
+
+        this.id = UUID.randomUUID();
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.message = message;
+        this.city = city;
+        this.state = state;
+        this.type = type;
+        this.createdAt = LocalDateTime.now();
+        this.items = (items != null) ? new ArrayList<>(items) : new ArrayList<>();
+        this.rdSyncStatus = RdSyncStatus.PENDING;
+        this.segment = segment;
 
         validate();
     }
@@ -59,6 +80,10 @@ public class  Lead {
 
     public static Lead createQuote(String name, String phone, String email, String message, String city, String state, List<LeadItem> items) {
         return new Lead(name, phone, email, message, city, state, LeadType.QUOTE, items);
+    }
+
+    public static Lead createWhatsapp(String name, String phone, String email, String city, String state, String segment) {
+        return new Lead(name, phone, email, null, city, state, LeadType.WHATSAPP, null, segment);
     }
 
     public RdSyncStatus getRdSyncStatus() {
@@ -107,4 +132,7 @@ public class  Lead {
 
     public void setId(UUID id) { this.id = id; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public String getSegment() { return segment; }
+    public void setSegment(String segment) { this.segment = segment; }
 }

@@ -41,6 +41,9 @@ public class LeadEntity {
     @Column(name = "state", length = 50)
     private String state;
 
+    @Column(name = "segment", length = 100)
+    private String segment;
+
     @Enumerated(EnumType.STRING)
     private LeadType type;
 

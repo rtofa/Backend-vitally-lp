@@ -74,6 +74,7 @@ public class LeadRepositoryImpl implements LeadRepository {
         entity.setCity(lead.getCity());
         entity.setState(lead.getState());
         entity.setType(lead.getType());
+        entity.setSegment(lead.getSegment());
         entity.setCreatedAt(lead.getCreatedAt());
 
         entity.setRdSyncStatus(lead.getRdSyncStatus());
@@ -106,6 +107,8 @@ public class LeadRepositoryImpl implements LeadRepository {
 
         if (type == LeadType.CONTACT) {
             lead = Lead.createContact(entity.getName(), entity.getPhone(), entity.getEmail(), entity.getMessage(), entity.getCity(), entity.getState());
+        } else if (type == LeadType.WHATSAPP) {
+            lead = Lead.createWhatsapp(entity.getName(), entity.getPhone(), entity.getEmail(), entity.getCity(), entity.getState(), entity.getSegment());
         } else {
             lead = Lead.createQuote(entity.getName(), entity.getPhone(), entity.getEmail(), entity.getMessage(), entity.getCity(), entity.getState(), domainItems);
         }
@@ -114,6 +117,7 @@ public class LeadRepositoryImpl implements LeadRepository {
         lead.setId(entity.getId());
         lead.setCreatedAt(entity.getCreatedAt());
         lead.setRdSyncStatus(entity.getRdSyncStatus());
+        lead.setSegment(entity.getSegment());
 
         return lead;
     }

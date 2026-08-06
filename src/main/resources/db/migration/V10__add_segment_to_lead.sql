@@ -1,0 +1,1 @@
+ALTER TABLE tb_lead ADD COLUMN segment VARCHAR(100);
